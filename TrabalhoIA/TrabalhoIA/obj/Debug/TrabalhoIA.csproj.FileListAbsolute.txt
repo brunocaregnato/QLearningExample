@@ -1,0 +1,7 @@
+C:\Users\Bruno\Documents\InteligenciaArtificial\TrabalhoIA\TrabalhoIA\bin\Debug\TrabalhoIA.exe.config
+C:\Users\Bruno\Documents\InteligenciaArtificial\TrabalhoIA\TrabalhoIA\bin\Debug\TrabalhoIA.exe
+C:\Users\Bruno\Documents\InteligenciaArtificial\TrabalhoIA\TrabalhoIA\bin\Debug\TrabalhoIA.pdb
+C:\Users\Bruno\Documents\InteligenciaArtificial\TrabalhoIA\TrabalhoIA\obj\Debug\TrabalhoIA.csprojAssemblyReference.cache
+C:\Users\Bruno\Documents\InteligenciaArtificial\TrabalhoIA\TrabalhoIA\obj\Debug\TrabalhoIA.csproj.CoreCompileInputs.cache
+C:\Users\Bruno\Documents\InteligenciaArtificial\TrabalhoIA\TrabalhoIA\obj\Debug\TrabalhoIA.exe
+C:\Users\Bruno\Documents\InteligenciaArtificial\TrabalhoIA\TrabalhoIA\obj\Debug\TrabalhoIA.pdb
