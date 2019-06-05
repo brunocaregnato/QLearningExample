@@ -38,7 +38,20 @@ namespace TrabalhoIA
             var table = new QTable(matrix);
             table.PrintTable();
             Console.ReadLine();
-        
+
+
+            var greatPolicy = new QGreatPolicy(table.Actions);
+            int cont = 0, numberExecutions = 0;
+            while (cont < 10)
+            {
+                numberExecutions++;
+                table.Train();
+                cont = greatPolicy.VerifyGreatPolicy(table.Actions, cont);
+            }
+
+            Console.WriteLine($"Numero de execucoes: {numberExecutions}");
+            table.PrintBestPath();
+            Console.ReadLine();
         }
 
         public static void PrintaMatriz(QQuadrant[,] matrix)

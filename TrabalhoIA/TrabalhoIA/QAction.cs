@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace TrabalhoIA
 {
-    class QQuadrant
+    class QAction
     {
         public double Reward { get;  set; }
-        public string Name { get; set; }
+        public QQuadrant Current { get;  set; }
+        public QQuadrant Target { get;  set; }
 
-
-        public QQuadrant(int reward, string name)
+        public QAction(int reward, QQuadrant current, QQuadrant target)
         {
             Reward = reward;
-            Name = name;
+            Current = current;
+            Target = target;
         }
-
-
 
     }
 }
