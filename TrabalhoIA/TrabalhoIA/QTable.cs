@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TrabalhoIA
 {
@@ -38,6 +36,7 @@ namespace TrabalhoIA
         {
             var list = GetPossibleActions(quadrant);
             double actionReward = list.Max(a => a.Reward);
+
             return quadrant.Reward + (0.5 * actionReward);
         }
 
@@ -46,10 +45,7 @@ namespace TrabalhoIA
             var list = new List<QAction>();
 
             foreach (var a in Actions)
-            {
                 if (a.Current.Equals(quadrant)) list.Add(a);
-
-            }
 
             return list;
         }
@@ -58,14 +54,14 @@ namespace TrabalhoIA
         {
             var list = GetPossibleActions(quadrant);
             
-            //pega maior acao
+            //acao aleatoria
             if (new Random().Next(0, 100) > 70 && includeRandomization)
             {
                 int acaoAleatoria = new Random().Next(0, 100) % list.Count;
 
                 return list[acaoAleatoria];
             }
-            //acao aleatoria
+            //maior acao
             else
             {
                 var maior = list[0];
@@ -75,28 +71,26 @@ namespace TrabalhoIA
                 }
 
                 return maior;
-
-                //list = list.Where(e => e.Reward == list.Max(l => l.Reward)).ToList();
-                //return list[new Random().Next(list.Count)];
             }
         }
 
         public void PrintTable()
         {
-            Console.WriteLine();
-
+            Console.WriteLine("------------------------------");
+            Console.WriteLine("| Q()     | Recompensa       | Teste de Qnts vezes entrou");
             foreach (var entry in Actions)
-            {
-                Console.WriteLine($"From {entry.Current.Name} to {entry.Target.Name} reward {entry.Reward}");
-            }
-     
-            Console.WriteLine();
+                Console.WriteLine($"| {entry.Current.Name.Substring(0,1)} , " +
+                    $"a{entry.Current.Name.Substring(1)}{entry.Target.Name.Substring(1)} | " +
+                    $"{entry.Reward.ToString().PadRight(17,' ')}|" +
+                    $"QntdVezesQueEntrou: {entry.Current.NumberOfTimesEntered}");
+            
+            Console.WriteLine("------------------------------");
         }
 
         public void PrintBestPath()
         {
             var quadrante = Map[0, 0];
-            
+            Console.WriteLine("\n------------------------------\nCaminho Ótimo\n------------------------------\n");
             while (true)
             {
                 var action = GetNextAction(quadrante, false);
@@ -110,32 +104,25 @@ namespace TrabalhoIA
 
         public void Train()
         {
-            for (int i = 0; i < 10; i++)
+            //Executa 100 vezes para encontrar o melhor caminho dessa historia
+            for (int i = 0; i < 100; i++)
             {
                 var quadrante = Map[0, 0];
                 
                 while (true)
                 {
-                    var t = GetNextAction(quadrante);
-                    var s = GetReward(t.Target);
-                    t.Reward = s;
-                    quadrante = t.Target;
+                    var nextAction = GetNextAction(quadrante);
+                    nextAction.Target.NumberOfTimesEntered++;
+                    var reward = GetReward(nextAction.Target);
+                    nextAction.Reward = reward;
+                    quadrante = nextAction.Target;
 
-                    if (Map[0, 9].Equals(quadrante))
-                    {
-                        //if (i % 50 == 0)
-                        //{
-                        //    Console.WriteLine("\nterminou\n");
-                        //    PrintTable();
-                        //    Console.ReadLine();
-                        //}
-                        break;
-                    }
+                    if (Map[0, 9].Equals(quadrante)) break;                    
                 }
             }
 
             PrintTable();
-            Console.ReadLine();
         }
+        
     }
 }

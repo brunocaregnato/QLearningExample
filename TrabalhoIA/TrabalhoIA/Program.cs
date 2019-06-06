@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TrabalhoIA
 {
@@ -28,33 +24,35 @@ namespace TrabalhoIA
             matrix[3, 7].Reward = -100;
             matrix[1, 3].Reward = -100;
             matrix[1, 7].Reward = -100;
+
             for (int i = 0; i < 9; i++)
             {
                 matrix[0, i].Reward = -100;
             }
             matrix[0, 9].Reward = 100;
-            
-            PrintaMatriz(matrix);
+
+            //PrintMatrix(matrix);
+
             var table = new QTable(matrix);
             table.PrintTable();
             Console.ReadLine();
 
-
             var greatPolicy = new QGreatPolicy(table.Actions);
             int cont = 0, numberExecutions = 0;
-            while (cont < 10)
+            while (cont < 100)
             {
                 numberExecutions++;
                 table.Train();
                 cont = greatPolicy.VerifyGreatPolicy(table.Actions, cont);
+                greatPolicy = new QGreatPolicy(table.Actions);
             }
 
-            Console.WriteLine($"Numero de execucoes: {numberExecutions}");
+            Console.WriteLine($"Numero de execuções para encontrar o melhor caminho: {numberExecutions}");
             table.PrintBestPath();
             Console.ReadLine();
         }
 
-        public static void PrintaMatriz(QQuadrant[,] matrix)
+        /*public static void PrintMatrix(QQuadrant[,] matrix)
         {
             Console.WriteLine();
 
@@ -71,6 +69,6 @@ namespace TrabalhoIA
             }
 
             Console.WriteLine();
-        }
+        }*/
     }
 }

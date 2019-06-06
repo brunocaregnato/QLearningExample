@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TrabalhoIA
 {
     class QQuadrant
     {
-        public double Reward { get;  set; }
-        public string Name { get; set; }
+        public double Reward { get; set; }
+        public string Name { get; }
+        public int NumberOfTimesEntered { get; set; }
 
 
         public QQuadrant(int reward, string name)
         {
             Reward = reward;
             Name = name;
+            NumberOfTimesEntered = 0;
         }
-
-
-
     }
 }
