@@ -6,6 +6,25 @@ namespace TrabalhoIA
     {
         static void Main(string[] args)
         {
+            var matrix = BuildMapMatrix();
+            var table = new QTable(matrix);
+            table.PrintTable();
+            Console.ReadLine();
+
+            int totalEpochs = table.Train();
+
+            Console.WriteLine($"Numero de execuções para encontrar o melhor caminho: {totalEpochs}");
+            Console.ReadLine();
+
+            table.PrintTable();
+            Console.ReadLine();
+
+            table.PrintBestPath();
+            Console.ReadLine();
+        }
+
+        private static QQuadrant[,] BuildMapMatrix()
+        {
             var aux = new string[5] { "A", "B", "C", "D", "E" };
             var matrix = new QQuadrant[5, 10];
 
@@ -29,46 +48,9 @@ namespace TrabalhoIA
             {
                 matrix[0, i].Reward = -100;
             }
+
             matrix[0, 9].Reward = 100;
-
-            //PrintMatrix(matrix);
-
-            var table = new QTable(matrix);
-            table.PrintTable();
-            Console.ReadLine();
-
-            var greatPolicy = new QGreatPolicy(table.Actions);
-            int cont = 0, numberExecutions = 0;
-            while (cont < 100)
-            {
-                numberExecutions++;
-                table.Train();
-                cont = greatPolicy.VerifyGreatPolicy(table.Actions, cont);
-                greatPolicy = new QGreatPolicy(table.Actions);
-            }
-
-            Console.WriteLine($"Numero de execuções para encontrar o melhor caminho: {numberExecutions}");
-            table.PrintBestPath();
-            Console.ReadLine();
+            return matrix;
         }
-
-        /*public static void PrintMatrix(QQuadrant[,] matrix)
-        {
-            Console.WriteLine();
-
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                Console.WriteLine($"Valor: {i} -");
-
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    Console.Write($" \"{matrix[i, j].Name} reward {matrix[i , j].Reward}\"\n");
-                }
-
-                Console.WriteLine();
-            }
-
-            Console.WriteLine();
-        }*/
     }
 }
