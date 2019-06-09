@@ -11,16 +11,9 @@ namespace TrabalhoIA
             table.PrintTable();
             Console.ReadLine();
 
-            int count = 0, totalExecutions = 0;
-            while (count < 100)
-            {
-                totalExecutions++;
-                var optimalPolicy = new QOptimalPolicyChecker(table.Actions);
-                table.Train();
-                count = optimalPolicy.TableHasConverged(table.Actions) ? ++count : 0;
-            }
+            int totalEpochs = table.Train();
 
-            Console.WriteLine($"Numero de execuções para encontrar o melhor caminho: {totalExecutions}");
+            Console.WriteLine($"Numero de execuções para encontrar o melhor caminho: {totalEpochs}");
             Console.ReadLine();
 
             table.PrintTable();

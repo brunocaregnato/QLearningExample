@@ -93,7 +93,7 @@ namespace TrabalhoIA
             }
         }
 
-        public void Train(int episodes = 100)
+        public void TrainEpoch(int episodes = 100)
         {
             for (int i = 0; i < episodes; i++)
             {
@@ -112,6 +112,21 @@ namespace TrabalhoIA
                     if (Map[0, 9].Equals(quadrant)) break;                    
                 }
             }
+        }
+
+        public int Train(int minEpochs = 100)
+        {
+            int count = 0, totalEpochs = 0;
+
+            while (count < minEpochs)
+            {
+                totalEpochs++;
+                var optimalPolicy = new QOptimalPolicyChecker(Actions);
+                TrainEpoch();
+                count = optimalPolicy.TableHasConverged(Actions) ? count + 1 : 0;
+            }
+
+            return totalEpochs;
         }
     }
 }
