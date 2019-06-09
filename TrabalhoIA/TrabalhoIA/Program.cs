@@ -12,7 +12,7 @@ namespace TrabalhoIA
             Console.ReadLine();
 
             int totalEpochs = table.Train();
-
+            
             Console.WriteLine($"Numero de execuções para encontrar o melhor caminho: {totalEpochs}");
             Console.ReadLine();
 

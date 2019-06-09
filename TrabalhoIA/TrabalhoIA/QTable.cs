@@ -69,18 +69,48 @@ namespace TrabalhoIA
         public void PrintTable()
         {
             Console.WriteLine("+---------------+-----------------------+----------------------------+");
-            Console.WriteLine("| Q()\t\t| Recompensa\t\t| Teste de Qnts vezes entrou |");
+            Console.WriteLine("| Q()\t\t| Recompensa\t\t| Qntd de vezes que entrou   |");                                                          
             Console.WriteLine("+---------------+-----------------------+----------------------------+");
 
             foreach (var entry in Actions)
-                Console.WriteLine($"| {entry.Current.Name}, {entry.GetActionName()}\t| {entry.Reward.ToString().PadRight(17,' ')}\t| {entry.Current.TotalPasses.ToString().PadRight(17,' ')}\t     |");
+            {
+                ChangeColor(entry.Current.TotalPasses);
+                Console.WriteLine($"| {entry.Current.Name}, {entry.GetActionName()}\t| {entry.Reward.ToString().PadRight(17, ' ')}\t| {entry.Current.TotalPasses.ToString().PadRight(17, ' ')}\t     |");
+            }
             
             Console.WriteLine("+---------------+-----------------------+----------------------------+");
+            Legend();
+        }
+
+        private void Legend()
+        {
+            ChangeColor(0);
+            Console.Write("Legenda para quantidade de vezes que entrou: ");
+            ChangeColor(499);
+            Console.Write(" < 500 ");
+            ChangeColor(4999);
+            Console.Write(" < 5000 ");
+            ChangeColor(24999);
+            Console.Write(" < 25000 ");
+            ChangeColor(25001);
+            Console.WriteLine(" >= 25000 ");
+        } 
+
+        private void ChangeColor(int totalPasses)
+        {
+            var color = Console.ForegroundColor;
+            if (totalPasses == 0) color = ConsoleColor.White;
+            else if (totalPasses < 500) color = ConsoleColor.Red;
+            else if (totalPasses < 5000) color = ConsoleColor.Yellow;
+            else if (totalPasses < 25000) color = ConsoleColor.Blue;
+            else color = ConsoleColor.Green;
+            Console.ForegroundColor = color;
         }
 
         public void PrintBestPath()
         {
             var quadrant = Map[0, 0];
+            ChangeColor(0);
             Console.WriteLine("\n------------------------------\nCaminho Ótimo\n------------------------------\n");
             while (true)
             {
@@ -117,6 +147,7 @@ namespace TrabalhoIA
         public int Train(int minEpochs = 100)
         {
             int count = 0, totalEpochs = 0;
+            bool automaticExecution = false;
 
             while (count < minEpochs)
             {
@@ -124,8 +155,21 @@ namespace TrabalhoIA
                 var optimalPolicy = new QOptimalPolicyChecker(Actions);
                 TrainEpoch();
                 count = optimalPolicy.TableHasConverged(Actions) ? count + 1 : 0;
+                if (!automaticExecution)
+                {
+                    PrintTable();
+                    ChangeColor(0);
+                    Console.WriteLine("\nPara executar automaticamente digite 's'");
+                    string leitura = Console.ReadLine();
+                    if (leitura.Equals("s"))
+                    {                        
+                        Console.WriteLine("Processando...\n");
+                        automaticExecution = true;
+                    }
+                }
             }
 
+            ChangeColor(0);
             return totalEpochs;
         }
     }
