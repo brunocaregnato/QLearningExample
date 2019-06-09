@@ -14,5 +14,10 @@ namespace TrabalhoIA
             Current = current;
             Target = target;
         }
+
+        public string GetActionName()
+        {
+            return $"{Current.Name}{Target.Name}";
+        }
     }
 }

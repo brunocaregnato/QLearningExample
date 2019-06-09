@@ -6,14 +6,14 @@ namespace TrabalhoIA
     {
         public double Reward { get; set; }
         public string Name { get; }
-        public int NumberOfTimesEntered { get; set; }
+        public int TotalPasses { get; set; }
 
 
         public QQuadrant(int reward, string name)
         {
             Reward = reward;
             Name = name;
-            NumberOfTimesEntered = 0;
+            TotalPasses = 0;
         }
     }
 }
